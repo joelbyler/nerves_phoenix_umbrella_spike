@@ -6,7 +6,8 @@ defmodule UserInterface.MemberController do
   plug :scrub_params, "member" when action in [:create, :update]
 
   def index(conn, _params) do
-    members = Repo.all(Member)
+    members = Repo.all(from m in Member, preload: :chores)
+
     render(conn, "index.html", members: members)
   end
 

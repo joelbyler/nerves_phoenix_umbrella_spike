@@ -6,8 +6,8 @@ defmodule UserInterface.ChoreController do
   plug :scrub_params, "chore" when action in [:create, :update]
   plug :fetch_member
 
-  def index(conn, _params) do
-    chores = Repo.all(Chore)
+  def index(conn, %{"member_id" => member_id}) do
+    chores = Repo.all(from c in Chore, where: c.member_id == ^member_id)
     render(conn, "index.html", chores: chores)
   end
 

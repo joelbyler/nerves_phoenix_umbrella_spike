@@ -6,8 +6,8 @@ defmodule UserInterface.DeviceController do
   plug :scrub_params, "device" when action in [:create, :update]
   plug :fetch_member
 
-  def index(conn, _params) do
-    devices = Repo.all(Device)
+  def index(conn, %{"member_id" => member_id}) do
+    devices = Repo.all(from d in Device, where: d.member_id == ^member_id)
     render(conn, "index.html", devices: devices)
   end
 
