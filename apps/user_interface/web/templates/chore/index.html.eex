@@ -1,0 +1,48 @@
+<h2>Listing chores</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Member</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Once</th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thrusday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for chore <- @chores do %>
+    <tr>
+      <td><%= chore.name %></td>
+      <td><%= chore.member_id %></td>
+      <td><%= chore.description %></td>
+      <td><%= chore.required %></td>
+      <td><%= chore.once %></td>
+      <td><%= chore.monday %></td>
+      <td><%= chore.tuesday %></td>
+      <td><%= chore.wednesday %></td>
+      <td><%= chore.thrusday %></td>
+      <td><%= chore.friday %></td>
+      <td><%= chore.saturday %></td>
+      <td><%= chore.sunday %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: chore_path(@conn, :show, chore), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: chore_path(@conn, :edit, chore), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: chore_path(@conn, :delete, chore), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New chore", to: chore_path(@conn, :new) %>

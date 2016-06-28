@@ -1,0 +1,68 @@
+<h2>Show chore</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @chore.name %>
+  </li>
+
+  <li>
+    <strong>Member:</strong>
+    <%= @chore.member_id %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @chore.description %>
+  </li>
+
+  <li>
+    <strong>Required:</strong>
+    <%= @chore.required %>
+  </li>
+
+  <li>
+    <strong>Once:</strong>
+    <%= @chore.once %>
+  </li>
+
+  <li>
+    <strong>Monday:</strong>
+    <%= @chore.monday %>
+  </li>
+
+  <li>
+    <strong>Tuesday:</strong>
+    <%= @chore.tuesday %>
+  </li>
+
+  <li>
+    <strong>Wednesday:</strong>
+    <%= @chore.wednesday %>
+  </li>
+
+  <li>
+    <strong>Thrusday:</strong>
+    <%= @chore.thrusday %>
+  </li>
+
+  <li>
+    <strong>Friday:</strong>
+    <%= @chore.friday %>
+  </li>
+
+  <li>
+    <strong>Saturday:</strong>
+    <%= @chore.saturday %>
+  </li>
+
+  <li>
+    <strong>Sunday:</strong>
+    <%= @chore.sunday %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: chore_path(@conn, :edit, @chore) %>
+<%= link "Back", to: chore_path(@conn, :index) %>

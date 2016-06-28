@@ -1,0 +1,33 @@
+<h2>Show device</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @device.name %>
+  </li>
+
+  <li>
+    <strong>Member:</strong>
+    <%= @device.member_id %>
+  </li>
+
+  <li>
+    <strong>Mac:</strong>
+    <%= @device.mac %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @device.description %>
+  </li>
+
+  <li>
+    <strong>Primary:</strong>
+    <%= @device.primary %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: device_path(@conn, :edit, @device) %>
+<%= link "Back", to: device_path(@conn, :index) %>

@@ -1,0 +1,13 @@
+<h2>Show member</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @member.name %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: member_path(@conn, :edit, @member) %>
+<%= link "Back", to: member_path(@conn, :index) %>
