@@ -11,3 +11,4 @@
 
 <%= link "Edit", to: member_path(@conn, :edit, @member) %>
 <%= link "Back", to: member_path(@conn, :index) %>
+<%= link "Delete", to: member_path(@conn, :delete, @member), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>

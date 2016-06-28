@@ -1,5 +1,22 @@
 <h2>Listing members</h2>
 
+<div class="ui cards">
+  <%= for member <- @members do %>
+    <div class="card">
+      <div class="content">
+        <div class="header"><%= member.name %></div>
+        <div class="meta">
+          <span class="right floated time">TODO: 2 of 3 chores completed</span>
+        </div>
+      </div>
+      <div class="extra content">
+        <%= link "Details", to: member_path(@conn, :show, member), class: "ui right floated primary button" %>
+      </div>
+    </div>
+  <% end %>
+
+</div>
+
 <table class="table">
   <thead>
     <tr>
@@ -9,6 +26,7 @@
     </tr>
   </thead>
   <tbody>
+
 <%= for member <- @members do %>
     <tr>
       <td><%= member.name %></td>
