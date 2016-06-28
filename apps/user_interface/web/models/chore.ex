@@ -3,7 +3,6 @@ defmodule UserInterface.Chore do
 
   schema "chores" do
     field :name, :string
-    field :member_id, :integer
     field :description, :string
     field :required, :boolean, default: false
     field :once, :boolean, default: false
@@ -14,11 +13,12 @@ defmodule UserInterface.Chore do
     field :friday, :boolean, default: false
     field :saturday, :boolean, default: false
     field :sunday, :boolean, default: false
+    belongs_to :member, UserInterface.Member
 
     timestamps
   end
 
-  @required_fields ~w(name member_id description required once monday tuesday wednesday thrusday friday saturday sunday)
+  @required_fields ~w(name description required once monday tuesday wednesday thrusday friday saturday sunday)
   @optional_fields ~w()
 
   @doc """

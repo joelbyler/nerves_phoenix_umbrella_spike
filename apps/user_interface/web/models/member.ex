@@ -4,6 +4,9 @@ defmodule UserInterface.Member do
   schema "members" do
     field :name, :string
 
+    has_many :devices, UserInterface.Device
+    has_many :chores, UserInterface.Chore
+
     timestamps
   end
 

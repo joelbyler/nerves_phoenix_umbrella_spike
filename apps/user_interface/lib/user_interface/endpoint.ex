@@ -33,7 +33,7 @@ defmodule UserInterface.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_user_interface_key",
-    signing_salt: "Yph2K/gP"
+    signing_salt: "cBHtDtiD"
 
   plug UserInterface.Router
 end

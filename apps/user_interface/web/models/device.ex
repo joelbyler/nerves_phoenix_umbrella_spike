@@ -3,15 +3,15 @@ defmodule UserInterface.Device do
 
   schema "devices" do
     field :name, :string
-    field :member_id, :integer
     field :mac, :string
     field :description, :string
     field :primary, :boolean, default: false
+    belongs_to :member, UserInterface.Member
 
     timestamps
   end
 
-  @required_fields ~w(name member_id mac description primary)
+  @required_fields ~w(name mac description primary)
   @optional_fields ~w()
 
   @doc """

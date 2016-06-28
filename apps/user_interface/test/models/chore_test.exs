@@ -3,7 +3,7 @@ defmodule UserInterface.ChoreTest do
 
   alias UserInterface.Chore
 
-  @valid_attrs %{description: "some content", friday: true, member_id: 42, monday: true, name: "some content", once: true, required: true, saturday: true, sunday: true, thrusday: true, tuesday: true, wednesday: true}
+  @valid_attrs %{description: "some content", friday: true, monday: true, name: "some content", once: true, required: true, saturday: true, sunday: true, thrusday: true, tuesday: true, wednesday: true}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

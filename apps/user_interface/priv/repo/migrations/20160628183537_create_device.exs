@@ -4,13 +4,14 @@ defmodule UserInterface.Repo.Migrations.CreateDevice do
   def change do
     create table(:devices) do
       add :name, :string
-      add :member_id, :integer
       add :mac, :string
       add :description, :text
       add :primary, :boolean, default: false
+      add :member_id, references(:members, on_delete: :nothing)
 
       timestamps
     end
+    create index(:devices, [:member_id])
 
   end
 end

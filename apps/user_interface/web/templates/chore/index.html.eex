@@ -36,13 +36,13 @@
       <td><%= chore.sunday %></td>
 
       <td class="text-right">
-        <%= link "Show", to: chore_path(@conn, :show, chore), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: chore_path(@conn, :edit, chore), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: chore_path(@conn, :delete, chore), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link "Show", to: member_chore_path(@conn, :show, @member, chore), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: member_chore_path(@conn, :edit, @member, chore), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: member_chore_path(@conn, :delete, @member, chore), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New chore", to: chore_path(@conn, :new) %>
+<%= link "New chore", to: member_chore_path(@conn, :new, @member) %>

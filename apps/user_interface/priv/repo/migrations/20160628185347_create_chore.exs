@@ -4,7 +4,6 @@ defmodule UserInterface.Repo.Migrations.CreateChore do
   def change do
     create table(:chores) do
       add :name, :string
-      add :member_id, :integer
       add :description, :text
       add :required, :boolean, default: false
       add :once, :boolean, default: false
@@ -15,9 +14,11 @@ defmodule UserInterface.Repo.Migrations.CreateChore do
       add :friday, :boolean, default: false
       add :saturday, :boolean, default: false
       add :sunday, :boolean, default: false
+      add :member_id, references(:members, on_delete: :nothing)
 
       timestamps
     end
+    create index(:chores, [:member_id])
 
   end
 end

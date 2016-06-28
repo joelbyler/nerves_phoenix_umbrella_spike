@@ -3,7 +3,7 @@ defmodule UserInterface.DeviceTest do
 
   alias UserInterface.Device
 
-  @valid_attrs %{description: "some content", mac: "some content", member_id: 42, name: "some content", primary: true}
+  @valid_attrs %{description: "some content", mac: "some content", name: "some content", primary: true}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

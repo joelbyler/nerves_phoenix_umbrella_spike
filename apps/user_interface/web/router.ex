@@ -18,9 +18,10 @@ defmodule UserInterface.Router do
 
     get "/", PageController, :index
 
-    resources "/members", MemberController
-    resources "/devices", DeviceController
-    resources "/chores", ChoreController
+    resources "/members", MemberController do
+      resources "/devices", DeviceController
+      resources "/chores", ChoreController
+    end
   end
 
   # Other scopes may use custom stacks.

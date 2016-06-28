@@ -64,5 +64,5 @@
 
 </ul>
 
-<%= link "Edit", to: chore_path(@conn, :edit, @chore) %>
-<%= link "Back", to: chore_path(@conn, :index) %>
+<%= link "Edit", to: member_chore_path(@conn, :edit, @member, @chore) %>
+<%= link "Back", to: member_chore_path(@conn, :index, @member) %>

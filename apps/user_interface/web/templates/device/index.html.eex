@@ -22,13 +22,13 @@
       <td><%= device.primary %></td>
 
       <td class="text-right">
-        <%= link "Show", to: device_path(@conn, :show, device), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: device_path(@conn, :edit, device), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: device_path(@conn, :delete, device), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link "Show", to: member_device_path(@conn, :show, @member, device), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: member_device_path(@conn, :edit, @member, device), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: member_device_path(@conn, :delete, @member, device), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New device", to: device_path(@conn, :new) %>
+<%= link "New device", to: member_device_path(@conn, :new, @member) %>

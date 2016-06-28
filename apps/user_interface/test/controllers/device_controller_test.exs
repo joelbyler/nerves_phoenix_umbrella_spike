@@ -2,7 +2,7 @@ defmodule UserInterface.DeviceControllerTest do
   use UserInterface.ConnCase
 
   alias UserInterface.Device
-  @valid_attrs %{description: "some content", mac: "some content", member_id: 42, name: "some content", primary: true}
+  @valid_attrs %{description: "some content", mac: "some content", name: "some content", primary: true}
   @invalid_attrs %{}
 
   test "lists all entries on index", %{conn: conn} do
