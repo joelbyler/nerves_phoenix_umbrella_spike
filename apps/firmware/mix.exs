@@ -33,7 +33,7 @@ defmodule Firmware.Mixfile do
   end
 
   def system(target) do
-    [{:"nerves_system_#{target}", ">= 0.0.0", git: "git@github.com:joelbyler/nerves_system_rpi3.git"}]
+    [{:"nerves_system_#{target}", ">= 0.0.0", git: "git@github.com:joelbyler/nerves_system_rpi3_with_hostapd.git"}]
     # [{:"nerves_system_#{target}", ">= 0.0.0"}]
   end
 
