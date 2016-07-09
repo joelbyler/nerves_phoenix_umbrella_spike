@@ -21,18 +21,20 @@ defmodule Firmware.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Firmware, []},
-     applications: [:nerves, :logger]]
+     applications: [:nerves, :logger, :nerves_networking, :user_interface, :sqlitex, :porcelain]]
   end
 
   def deps do
-    [
-      {:nerves, "~> 0.3.0"},
-      {:create_ap, github: 'oblique/create_ap', app: false}
-    ]
+    [{:nerves, "~> 0.3.0"},
+     {:porcelain, "~> 2.0"},
+     {:user_interface, in_umbrella: true},
+     {:sqlite_ecto, ">= 0.0.0"},
+     {:nerves_networking, github: "nerves-project/nerves_networking"}]
   end
 
   def system(target) do
     [{:"nerves_system_#{target}", ">= 0.0.0", git: "git@github.com:joelbyler/nerves_system_rpi3.git"}]
+    # [{:"nerves_system_#{target}", ">= 0.0.0"}]
   end
 
   def aliases do
