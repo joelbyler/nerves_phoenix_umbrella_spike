@@ -1,6 +1,6 @@
 #!/bin/sh
 
 hostapd -d /etc/hostapd/hostapd.conf
-dnsmasq
+# dnsmasq
 
 exit 0
