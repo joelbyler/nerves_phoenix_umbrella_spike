@@ -7,7 +7,7 @@ defmodule Firmware.Mixfile do
     [app: :firmware,
      version: "0.0.1",
      target: @target,
-     archives: [nerves_bootstrap: "0.1.2"],
+     archives: [nerves_bootstrap: "0.1.3"],
      deps_path: "deps/#{@target}",
      build_path: "_build/#{@target}",
      build_embedded: Mix.env == :prod,
@@ -33,8 +33,8 @@ defmodule Firmware.Mixfile do
   end
 
   def system(target) do
-    [{:"nerves_system_#{target}", ">= 0.0.0", git: "git@github.com:joelbyler/nerves_system_rpi3_with_hostapd.git"}]
-    # [{:"nerves_system_#{target}", ">= 0.0.0"}]
+    # [{:"nerves_system_#{target}", ">= 0.0.0", git: "git@github.com:joelbyler/nerves_system_rpi3_jcb.git"}]
+    [{:"nerves_system_#{target}", ">= 0.0.0"}]
   end
 
   def aliases do
