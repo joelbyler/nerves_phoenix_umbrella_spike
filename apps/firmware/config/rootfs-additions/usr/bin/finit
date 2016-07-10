@@ -1,8 +1,5 @@
 #!/bin/sh
 
-which hostapd
-
 hostapd -d /etc/hostapd/hostapd.conf
-/usr/sbin/hostapd -d /etc/hostapd/hostapd.conf
 
 exit 0
