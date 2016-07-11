@@ -20,6 +20,8 @@ defmodule Firmware do
       # worker(Firmware.Worker, [arg1, arg2, arg3]),
     ]
 
+    migrate
+
     IO.puts "Running custom initialization script"
     {finit_output, return_val} = System.cmd("finit", ["start"])
     IO.puts "initialization result: #{finit_output}; #{return_val}"
@@ -35,22 +37,18 @@ defmodule Firmware do
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
 
-
-
     opts = [strategy: :one_for_one, name: Firmware.Supervisor]
     Supervisor.start_link(children, opts)
 
   end
 
   # TODO: migrate db
-  #   defp migrate do
-  #     {:ok, _} = Application.ensure_all_started(:my_app)
-  #
-  #     path = Application.app_dir(:my_app, "priv/repo/migrations")
-  #
-  #     Ecto.Migrator.run(MyApp.Repo, path, :up, all: true)
-  #
-  #     :init.stop()
-  #   end
+  defp migrate do
+    {:ok, _} = Application.ensure_all_started(:user_interface)
+
+    path = Application.app_dir(:user_interface, "priv/repo/migrations")
+
+    Ecto.Migrator.run(UserInterface.Repo, path, :up, all: true)
+  end
 
 end
