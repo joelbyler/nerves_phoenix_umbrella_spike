@@ -7,7 +7,7 @@ defmodule Firmware.Mixfile do
     [app: :firmware,
      version: "0.0.1",
      target: @target,
-     archives: [nerves_bootstrap: "0.1.2"],
+     archives: [nerves_bootstrap: "0.1.4"],
      deps_path: "deps/#{@target}",
      build_path: "_build/#{@target}",
      build_embedded: Mix.env == :prod,
@@ -21,7 +21,7 @@ defmodule Firmware.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Firmware, []},
-     applications: [:nerves, :logger, :nerves_networking, :user_interface, :sqlitex, :porcelain]]
+     applications: [:nerves, :logger, :nerves_networking, :user_interface, :sqlitex, :porcelain, :nerves_interim_wifi]]
   end
 
   def deps do
@@ -29,7 +29,8 @@ defmodule Firmware.Mixfile do
      {:porcelain, "~> 2.0"},
      {:user_interface, in_umbrella: true},
      {:sqlite_ecto, ">= 0.0.0"},
-     {:nerves_networking, github: "nerves-project/nerves_networking"}]
+     {:nerves_networking, github: "nerves-project/nerves_networking"},
+     {:nerves_interim_wifi, "~> 0.0.2"}]
   end
 
   def system(target) do

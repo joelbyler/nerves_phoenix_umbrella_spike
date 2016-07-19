@@ -14,6 +14,10 @@ use Mix.Config
 config :nerves, :firmware,
   rootfs_additions: "config/rootfs-additions"
 
+# if unset, the default regulatory domain is the world domain, "00"
+config :nerves_interim_wifi,
+  regulatory_domain: "US"
+
 config :user_interface, UserInterface.Endpoint,
   http: [port: 80],
   url: [host: "localhost", port: 80],

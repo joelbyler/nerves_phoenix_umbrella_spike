@@ -50,13 +50,21 @@ defmodule Firmware do
   end
 
   defp start_network do
-    IO.puts "Starting dnsmasq"
-    {dnsmasq_output, dnsmasq_return_val} = System.cmd("dnsmasq", [])
-    IO.puts "dnsmasq result: #{dnsmasq_output}; #{dnsmasq_return_val}"
+    # IO.puts "Starting dnsmasq"
+    # {dnsmasq_output, dnsmasq_return_val} = System.cmd("dnsmasq", [])
+    # IO.puts "dnsmasq result: #{dnsmasq_output}; #{dnsmasq_return_val}"
 
-    IO.puts "Starting hostapd"
-    {hostapd_output, hostapd_return_val} = System.cmd("hostapd", ["-d", "/etc/hostapd/hostapd.conf"])
-    IO.puts "hostapd result: #{hostapd_output}; #{hostapd_return_val}"
+    # IO.puts "Setting up iptables"
+    # {iptables_output, iptables_return_val} = System.cmd("iptblsgo", [])
+    # IO.puts "iptables result: #{iptables_output}; #{iptables_return_val}"
+
+    #IO.puts "Starting hostapd"
+    #{hostapd_output, hostapd_return_val} = System.cmd("hostapd", ["-B", "-d", "/etc/hostapd/hostapd.conf"])
+    #IO.puts "hostapd result: #{hostapd_output}; #{hostapd_return_val}"
+
+    IO.puts "Initializing system"
+    {hostapd_output, hostapd_return_val} = System.cmd("finit", [])
+    IO.puts "result: #{hostapd_output}; #{hostapd_return_val}"
   end
 
 end
