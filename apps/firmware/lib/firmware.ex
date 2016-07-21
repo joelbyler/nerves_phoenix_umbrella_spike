@@ -6,8 +6,6 @@ defmodule Firmware do
   alias Nerves.Networking
   alias Porcelain.Result
 
-  # See http://elixir-lang.org/docs/stable/elixir/Application.html
-  # for more information on OTP Applications
   def start(_type, _args) do
     import Supervisor.Spec
 
@@ -15,32 +13,15 @@ defmodule Firmware do
       {:ok, _pid} = Networking.setup :eth0
     end
 
-    # Define workers and child supervisors to be supervised
-    children = [
-      # worker(Firmware.Worker, [arg1, arg2, arg3]),
-    ]
-
     migrate
+    setup_network
 
-    # IO.puts "Running custom initialization script"
-    # {finit_output, return_val} = System.cmd("finit", ["start"])
-    # IO.puts "initialization result: #{finit_output}; #{return_val}"
-
-    # IO.puts "Trying again with porcelain"
-    # %Result{out: porcelain_output, status: porcelain_status} = Porcelain.shell("finit start")
-    # IO.puts "porcelain result: #{porcelain_output}; #{porcelain_status}"
-
-    start_network
-
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-    # for other strategies and supported options
-
+    children = [ ]
     opts = [strategy: :one_for_one, name: Firmware.Supervisor]
     Supervisor.start_link(children, opts)
 
   end
 
-  # TODO: migrate db
   defp migrate do
     {:ok, _} = Application.ensure_all_started(:user_interface)
 
@@ -49,21 +30,42 @@ defmodule Firmware do
     Ecto.Migrator.run(UserInterface.Repo, path, :up, all: true)
   end
 
-  defp start_network do
-    # IO.puts "Starting dnsmasq"
-    # {dnsmasq_output, dnsmasq_return_val} = System.cmd("dnsmasq", [])
-    # IO.puts "dnsmasq result: #{dnsmasq_output}; #{dnsmasq_return_val}"
+  defp setup_network do
+    setup_eth0_interface
+  end
 
-    # IO.puts "Setting up iptables"
-    # {iptables_output, iptables_return_val} = System.cmd("iptblsgo", [])
-    # IO.puts "iptables result: #{iptables_output}; #{iptables_return_val}"
+  defp setup_eth0_interface do
+    interface      = :eth0
+    static_config  = %{
+      mode:      "static",              # use static IP
+      dns1:      "8.8.8.8",             # DNS server 1 (Google)
+      dns2:      "8.8.4.4",             # DNS server 2 (Google)
+      hostname:  "nerves_box",          # hostname
+      ip:        "192.168.1.2",         # target's IP address
+      mask:      "8",                   # usable bits in subnet
+      router:    "192.168.1.1",         # router's IP address
+      subnet:    "255.255.255.0"        # subnet mask
+    }
 
-    #IO.puts "Starting hostapd"
-    #{hostapd_output, hostapd_return_val} = System.cmd("hostapd", ["-B", "-d", "/etc/hostapd/hostapd.conf"])
-    #IO.puts "hostapd result: #{hostapd_output}; #{hostapd_return_val}"
+    IO.puts "Initializing eth0"
+    {:ok, _pid}    = Networking.setup(:interface, static_config)
+
+    IO.puts "Initializing dnsmasq"
+    {dnsmasq_output, dnsmasq_return_val} = System.cmd("dnsmasq", [])
+    IO.puts "result: #{dnsmasq_output}; #{dnsmasq_return_val}"
+
+    IO.puts "Initializing iptables"
+    {iptables_output, iptables_return_val} = System.cmd("init_nat", [])
+    IO.puts "result: #{iptables_output}; #{iptables_return_val}"
+
+    IO.puts "Initializing wlan0"
+    {ip3_o, ip3_v} = System.cmd("ip", ["addr", "add", "10.0.0.1/24", "dev", "wlan0"])
+    IO.puts "result: #{ip2_o}; #{ip2_v}"
+    {ip2_o, ip2_v} = System.cmd("ip", ["link", "set", "wlan0", "up"])
+    IO.puts "result: #{ip3_o}; #{ip3_v}"
 
     IO.puts "Initializing system"
-    {hostapd_output, hostapd_return_val} = System.cmd("finit", [])
+    {hostapd_output, hostapd_return_val} = System.cmd("hostapd", ["-B", "-d", "/etc/hostapd/hostapd.conf"])
     IO.puts "result: #{hostapd_output}; #{hostapd_return_val}"
   end
 

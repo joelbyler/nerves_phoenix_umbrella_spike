@@ -16,7 +16,10 @@ defmodule UserInterface.Router do
   scope "/", UserInterface do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", MemberController, :welcome
+
+    get "/parent/authenticate", ParentController, :login
+    post "/parent/authenticate", ParentController, :authenticate
 
     resources "/members", MemberController do
       resources "/devices", DeviceController

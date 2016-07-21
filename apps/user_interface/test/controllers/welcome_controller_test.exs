@@ -1,4 +1,4 @@
-defmodule UserInterface.PageControllerTest do
+defmodule UserInterface.WelcomeControllerTest do
   use UserInterface.ConnCase
 
   test "GET /", %{conn: conn} do

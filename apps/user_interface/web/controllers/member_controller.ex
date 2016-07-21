@@ -65,4 +65,10 @@ defmodule UserInterface.MemberController do
     |> put_flash(:info, "Member deleted successfully.")
     |> redirect(to: member_path(conn, :index))
   end
+
+  def welcome(conn, _params) do
+    members = Repo.all(from m in Member, preload: :chores)
+
+    render(conn, "welcome.html", members: members)
+  end
 end

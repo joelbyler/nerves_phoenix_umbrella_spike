@@ -1,4 +1,4 @@
-defmodule UserInterface.PageController do
+defmodule UserInterface.WelcomeController do
   use UserInterface.Web, :controller
 
   def index(conn, _params) do

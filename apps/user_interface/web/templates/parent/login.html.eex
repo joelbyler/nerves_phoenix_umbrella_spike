@@ -1,0 +1,9 @@
+<%= form_for @conn, parent_path(@conn, :authenticate), [as: :search, class: "ui form segment"], fn f -> %>
+  <p>Please enter your parental password</p>
+  <div class="field">
+    <label>Password</label>
+    <input type="password" name="password">
+  </div>
+  <%= submit "Enter", class: "ui blue submit button" %>
+  <div class="ui error message"></div>
+<% end %>
