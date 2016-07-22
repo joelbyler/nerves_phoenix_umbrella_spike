@@ -15,9 +15,15 @@
     <div class="ui container">
       <header class="header">
         <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <%= link "Parents", to: parent_path(@conn, :login), class: "ui primary button" %>
-          </ul>
+          <%= if parent?(@conn) do %>
+            <ul class="nav nav-pills pull-right">
+              <%= link "Sign Out", to: parent_path(@conn, :signout), class: "ui primary button" %>
+            </ul>
+          <%= else %>
+            <ul class="nav nav-pills pull-right">
+              <%= link "Parents", to: parent_path(@conn, :login), class: "ui primary button" %>
+            </ul>
+          <% end %>
         </nav>
         <span class="logo"></span>
       </header>

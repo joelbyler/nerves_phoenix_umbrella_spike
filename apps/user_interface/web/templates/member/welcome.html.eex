@@ -11,15 +11,8 @@
         </div>
       </div>
       <div class="extra content">
-        <%= link "Details", to: member_path(@conn, :show, member), class: "ui right floated primary button" %>
+        <%= link "Choose", to: member_path(@conn, :show, member), class: "ui right floated primary button" %>
       </div>
     </div>
   <% end %>
 </div>
-
-<br/>
-<%= link "New member", to: member_path(@conn, :new) %>
-
-<br/>
-<h3>Or are you a parent?</h3>
-<%= link "Yes, I'm a parent", to: member_path(@conn, :new) %>

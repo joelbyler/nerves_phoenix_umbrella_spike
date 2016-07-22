@@ -1,16 +1,16 @@
-<h2>Listing members</h2>
+<h2>Family Members</h2>
 
 <div class="ui cards">
   <%= for member <- @members do %>
     <div class="card">
       <div class="content">
-        <div class="header"><%= member.name %></div>
-        <div class="meta">
-          <span class="right floated time"><%= length(member.chores) %> chores</span>
-        </div>
+          <%= member.name %>
+          <%= link to: member_path(@conn, :edit, member) do %>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          <% end %>
       </div>
       <div class="extra content">
-        <%= link "Details", to: member_path(@conn, :show, member), class: "ui right floated primary button" %>
+        <%= link "#{length(member.chores)} Chores", to: member_chore_path(@conn, :index, member), class: "ui right floated primary button" %>
       </div>
     </div>
   <% end %>

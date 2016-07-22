@@ -13,6 +13,7 @@
   "exactor": {:hex, :exactor, "2.2.0", "2a7418b82d974fe8276edd62c1facf4a9dc06339cdf11b5dcd10359e107fe5c3", [:mix], []},
   "exrm": {:hex, :exrm, "1.0.5", "53ecb20da2f4e5b4c82ea6776824fbc677c8d287bf20efc9fc29cacc2cca124f", [:mix], [{:relx, "~> 3.5", [hex: :relx, optional: false]}]},
   "factory_girl_elixir": {:hex, :factory_girl_elixir, "0.1.1", "2c2b41111a409cf74131cd0f651fe65d77eb60d4b45775192ecde9820dc59ac5", [:mix], []},
+  "font_awesome_phoenix": {:hex, :font_awesome_phoenix, "0.3.2", "54f5a1640887ae037d240b42ee6712a239dc15d91109296576f76648310d61af", [:mix], [{:phoenix_html, "~> 2.0", [hex: :phoenix_html, optional: false]}]},
   "fs": {:hex, :fs, "0.9.2", "ed17036c26c3f70ac49781ed9220a50c36775c6ca2cf8182d123b6566e49ec59", [:rebar], []},
   "getopt": {:hex, :getopt, "0.8.2", "b17556db683000ba50370b16c0619df1337e7af7ecbf7d64fbf8d1d6bce3109b", [:rebar], []},
   "gettext": {:hex, :gettext, "0.11.0", "80c1dd42d270482418fa158ec5ba073d2980e3718bacad86f3d4ad71d5667679", [:mix], []},

@@ -20,6 +20,7 @@ defmodule UserInterface.Router do
 
     get "/parent/authenticate", ParentController, :login
     post "/parent/authenticate", ParentController, :authenticate
+    get "/parent/signout", ParentController, :signout
 
     resources "/members", MemberController do
       resources "/devices", DeviceController

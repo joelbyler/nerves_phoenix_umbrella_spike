@@ -52,6 +52,10 @@ defmodule UserInterface.Web do
       import UserInterface.Router.Helpers
       import UserInterface.ErrorHelpers
       import UserInterface.Gettext
+
+      import FontAwesomePhoenix.HTML
+
+      import UserInterface.ParentViewHelper
     end
   end
 
