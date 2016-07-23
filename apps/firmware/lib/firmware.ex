@@ -50,19 +50,37 @@ defmodule Firmware do
     IO.puts "Initializing eth0"
     {:ok, _pid}    = Networking.setup(:interface, static_config)
 
-    IO.puts "Initializing dnsmasq"
-    {dnsmasq_output, dnsmasq_return_val} = System.cmd("dnsmasq", [])
-    IO.puts "result: #{dnsmasq_output}; #{dnsmasq_return_val}"
-
-    IO.puts "Initializing iptables"
-    {iptables_output, iptables_return_val} = System.cmd("init_nat", [])
-    IO.puts "result: #{iptables_output}; #{iptables_return_val}"
+    IO.puts "Setting sysctl"
+    {sysctl_o, sysctl_v} = System.cmd("sysctl", ["-w", "net.ipv4.ip_forward=1"])
+    IO.puts "result: #{sysctl_o}; #{sysctl_v}"
 
     IO.puts "Initializing wlan0"
-    {ip3_o, ip3_v} = System.cmd("ip", ["addr", "add", "10.0.0.1/24", "dev", "wlan0"])
-    IO.puts "result: #{ip2_o}; #{ip2_v}"
     {ip2_o, ip2_v} = System.cmd("ip", ["link", "set", "wlan0", "up"])
+    IO.puts "result: #{ip2_o}; #{ip2_v}"
+    {ip3_o, ip3_v} = System.cmd("ip", ["addr", "add", "10.0.0.1/24", "dev", "wlan0"])
     IO.puts "result: #{ip3_o}; #{ip3_v}"
+
+    IO.puts "Initializing iptables"
+    {ipt1_o, ipt1_v} = System.cmd("iptables", ["--flush"])
+    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
+    {ipt1_o, ipt1_v} = System.cmd("iptables", ["--table", "nat", "--flush"])
+    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
+    {ipt1_o, ipt1_v} = System.cmd("iptables", ["--delete-chain"])
+    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
+    {ipt1_o, ipt1_v} = System.cmd("iptables", ["--table", "nat", "--delete-chain"])
+    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
+    {ipt1_o, ipt1_v} = System.cmd("iptables", ["--table", "nat", "--append", "POSTROUTING"])
+    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
+    {ipt1_o, ipt1_v} = System.cmd("iptables", ["-t", "nat", "-A", "POSTROUTING", "-o", "eth0", "-j", "MASQUERADE"])
+    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
+    {ipt1_o, ipt1_v} = System.cmd("iptables", ["-A", "FORWARD", "-i", "eth0", "-o", "wlan0", "-m", "state", "--state", "RELATED,ESTABLISHED", "-j", "ACCEPT"])
+    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
+    {ipt1_o, ipt1_v} = System.cmd("iptables", ["-A", "FORWARD", "-i", "wlan0", "-o", "eth0", "-j", "ACCEPT"])
+    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
+
+    IO.puts "Initializing dnsmasq"
+    {dnsmasq_output, dnsmasq_return_val} = System.cmd("dnsmasq", ["--dhcp-lease", "/root/dnsmasq.lease"])
+    IO.puts "result: #{dnsmasq_output}; #{dnsmasq_return_val}"
 
     IO.puts "Initializing system"
     {hostapd_output, hostapd_return_val} = System.cmd("hostapd", ["-B", "-d", "/etc/hostapd/hostapd.conf"])
