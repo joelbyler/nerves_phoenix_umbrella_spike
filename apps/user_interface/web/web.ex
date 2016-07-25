@@ -56,6 +56,7 @@ defmodule UserInterface.Web do
       import FontAwesomePhoenix.HTML
 
       import UserInterface.ParentViewHelper
+      import UserInterface.UserHelper
     end
   end
 

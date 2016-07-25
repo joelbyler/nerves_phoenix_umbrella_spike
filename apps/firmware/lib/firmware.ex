@@ -47,44 +47,43 @@ defmodule Firmware do
       subnet:    "255.255.255.0"        # subnet mask
     }
 
+    # TODO: build wrappers for all of these system calls
+
     IO.puts "Initializing eth0"
-    {:ok, _pid}    = Networking.setup(:interface, static_config)
+    Networking.setup(:eth0)
 
     IO.puts "Setting sysctl"
-    {sysctl_o, sysctl_v} = System.cmd("sysctl", ["-w", "net.ipv4.ip_forward=1"])
-    IO.puts "result: #{sysctl_o}; #{sysctl_v}"
+    System.cmd("sysctl", ["-w", "net.ipv4.ip_forward=1"])
 
     IO.puts "Initializing wlan0"
-    {ip2_o, ip2_v} = System.cmd("ip", ["link", "set", "wlan0", "up"])
-    IO.puts "result: #{ip2_o}; #{ip2_v}"
-    {ip3_o, ip3_v} = System.cmd("ip", ["addr", "add", "10.0.0.1/24", "dev", "wlan0"])
-    IO.puts "result: #{ip3_o}; #{ip3_v}"
+    System.cmd("ip", ["link", "set", "wlan0", "up"])
+    System.cmd("ip", ["addr", "add", "10.0.0.1/24", "dev", "wlan0"])
 
     IO.puts "Initializing iptables"
-    {ipt1_o, ipt1_v} = System.cmd("iptables", ["--flush"])
-    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
-    {ipt1_o, ipt1_v} = System.cmd("iptables", ["--table", "nat", "--flush"])
-    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
-    {ipt1_o, ipt1_v} = System.cmd("iptables", ["--delete-chain"])
-    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
-    {ipt1_o, ipt1_v} = System.cmd("iptables", ["--table", "nat", "--delete-chain"])
-    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
-    {ipt1_o, ipt1_v} = System.cmd("iptables", ["--table", "nat", "--append", "POSTROUTING"])
-    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
-    {ipt1_o, ipt1_v} = System.cmd("iptables", ["-t", "nat", "-A", "POSTROUTING", "-o", "eth0", "-j", "MASQUERADE"])
-    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
-    {ipt1_o, ipt1_v} = System.cmd("iptables", ["-A", "FORWARD", "-i", "eth0", "-o", "wlan0", "-m", "state", "--state", "RELATED,ESTABLISHED", "-j", "ACCEPT"])
-    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
-    {ipt1_o, ipt1_v} = System.cmd("iptables", ["-A", "FORWARD", "-i", "wlan0", "-o", "eth0", "-j", "ACCEPT"])
-    IO.puts "result: #{ipt1_o}; #{ipt1_v}"
+    Firmware.IpTables.clear
+    Firmware.IpTables.start_post_routing(:eth0)
+    Firmware.IpTables.forward(:eth0, :wlan0)
+    # System.cmd("iptables", ["--flush"])
+    # System.cmd("iptables", ["--table", "nat", "--flush"])
+    # System.cmd("iptables", ["--delete-chain"])
+    # System.cmd("iptables", ["--table", "nat", "--delete-chain"])
+    # System.cmd("iptables", ["--table", "nat", "--append", "POSTROUTING"])
+    # System.cmd("iptables", ["-t", "nat", "-A", "POSTROUTING", "-o", "eth0", "-j", "MASQUERADE"])
+    # System.cmd("iptables", ["-A", "FORWARD", "-i", "eth0", "-o", "wlan0", "-m", "state", "--state", "RELATED,ESTABLISHED", "-j", "ACCEPT"])
+    # System.cmd("iptables", ["-A", "FORWARD", "-i", "wlan0", "-o", "eth0", "-j", "ACCEPT"])
+
 
     IO.puts "Initializing dnsmasq"
-    {dnsmasq_output, dnsmasq_return_val} = System.cmd("dnsmasq", ["--dhcp-lease", "/root/dnsmasq.lease"])
-    IO.puts "result: #{dnsmasq_output}; #{dnsmasq_return_val}"
+    System.cmd("dnsmasq", ["--dhcp-lease", "/root/dnsmasq.lease"])
 
     IO.puts "Initializing system"
-    {hostapd_output, hostapd_return_val} = System.cmd("hostapd", ["-B", "-d", "/etc/hostapd/hostapd.conf"])
-    IO.puts "result: #{hostapd_output}; #{hostapd_return_val}"
+    System.cmd("hostapd", ["-B", "-d", "/etc/hostapd/hostapd.conf"])
+  end
+
+  def mac_for_ip(ip) do
+    {arp_result, arp_status} = System.cmd("arp", ["-a", ip])
+    # TODO: throw exception unless arp_status == 0
+    List.first(Regex.run(~r/([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}/, arp_result))
   end
 
 end
