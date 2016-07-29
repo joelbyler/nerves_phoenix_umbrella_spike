@@ -2,11 +2,12 @@ defmodule UserInterface.ErrorView do
   use UserInterface.Web, :view
 
   def render("404.html", _assigns) do
-    "Page not found"
+    # DO THIS FOR CAPTIVE PORTAL
+    render("/", %{})
   end
 
   def render("500.html", _assigns) do
-    "Server internal error"
+    render("/", %{})
   end
 
   # In case no render clause matches or no

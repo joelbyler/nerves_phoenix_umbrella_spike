@@ -1,7 +1,7 @@
 <h2>Welcome!</h2>
 <h2>Please tell us, are you one of these folks?</h2>
-<%= user_ip_address(@conn) %>
-<%= user_mac_address(@conn) %>
+user_ip_address(@conn)
+user_mac_address(@conn)
 <div class="ui cards">
   <%= for member <- @members do %>
     <div class="card">
