@@ -34,13 +34,16 @@ defmodule Firmware.Mixfile do
   end
 
   def system(target) do
-    # [{:"nerves_system_#{target}", ">= 0.0.0", git: "git@github.com:joelbyler/nerves_system_rpi3_jcb.git"}]
+    # [{:"nerves_system_#{target}", ">= 0.0.0", git: "git@github.com:joelbyler/nerves_system_rpi3_ap.git"}]
     [{:"nerves_system_#{target}", ">= 0.0.0"}]
   end
 
   def aliases do
-    ["deps.precompile": ["nerves.precompile", "deps.precompile"],
-     "deps.loadpaths":  ["deps.loadpaths", "nerves.loadpaths"]]
+    [
+      "deps.precompile": ["nerves.precompile", "deps.precompile"],
+      "deps.loadpaths":  ["deps.loadpaths", "nerves.loadpaths"],
+      "build":  ["compile", "firmware", "firmware.burn"]
+    ]
   end
 
 end

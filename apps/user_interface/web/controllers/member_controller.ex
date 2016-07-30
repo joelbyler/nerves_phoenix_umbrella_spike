@@ -3,6 +3,8 @@ defmodule UserInterface.MemberController do
 
   alias UserInterface.Member
 
+  import UserInterface.NetworkConnectionHelper
+
   plug :scrub_params, "member" when action in [:create, :update]
 
   def index(conn, _params) do
@@ -68,7 +70,9 @@ defmodule UserInterface.MemberController do
 
   def welcome(conn, _params) do
     members = Repo.all(from m in Member, preload: :chores)
+    visitor_ip = Task.async(fn -> user_ip_address(conn) end)
+    visitor_mac = Task.async(fn -> user_mac_address(conn) end)
 
-    render(conn, "welcome.html", members: members)
+    render(conn, "welcome.html", members: members, visitor_ip: Task.await(visitor_ip), visitor_mac: Task.await(visitor_mac))
   end
 end

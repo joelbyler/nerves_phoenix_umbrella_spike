@@ -41,7 +41,8 @@ defmodule UserInterface.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
-     {:font_awesome_phoenix, "~> 0.1"}]
+     {:font_awesome_phoenix, "~> 0.1"},
+     {:sh, "~> 1.1"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
@@ -51,7 +52,10 @@ defmodule UserInterface.Mixfile do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-     "ecto.reset": ["ecto.drop", "ecto.setup"]]
+    [
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      "s": ["phoenix.server"]
+    ]
   end
 end

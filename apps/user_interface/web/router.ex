@@ -26,6 +26,10 @@ defmodule UserInterface.Router do
       resources "/devices", DeviceController
       resources "/chores", ChoreController
     end
+
+    # some times captive portal will pass along url path and phoenix will return 404
+    # this route will catch that
+    get "/*path", MemberController, :welcome
   end
 
   # Other scopes may use custom stacks.
