@@ -2,7 +2,6 @@ defmodule UserInterface.MemberController do
   use UserInterface.Web, :controller
 
   alias UserInterface.Member
-
   import UserInterface.NetworkConnectionHelper
 
   plug :scrub_params, "member" when action in [:create, :update]

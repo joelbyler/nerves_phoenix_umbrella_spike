@@ -1,7 +1,10 @@
 <h2>Welcome!</h2>
 <h2>Please tell us, are you one of these folks?</h2>
+
 <%= @visitor_ip %>
 <%= @visitor_mac %>
+<%= link "Unmark", to: parent_path(@conn, :unmark), class: "ui primary button" %>
+
 <div class="ui cards">
   <%= for member <- @members do %>
     <div class="card">
