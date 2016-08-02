@@ -1,0 +1,3 @@
+#!/bin/sh
+
+hostapd -B -d /etc/hostapd/hostapd.conf

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+dnsmasq --dhcp-lease /root/dnsmasq.lease
